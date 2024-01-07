@@ -4,8 +4,6 @@ import {Todolist} from "./components/Todolist";
 import {v1} from "uuid";
 
 
-
-
 export type FilterButtonValue = 'all' | 'active' | 'completed';
 
 function App() {
@@ -16,6 +14,10 @@ function App() {
         {id: v1(), title: "Redux", isDone: false}
     ])
     let [filter, setFilter] = useState<FilterButtonValue>('all')
+
+    const changeTaskStatus = (taskId: string, isDone: boolean) => {
+      setTask(tasks.map(t => t.id === taskId ? {...t, isDone: isDone} : t))
+    }
 
     const removeTask = (id: string) => {
         setTask(tasks.filter(t => t.id !== id))
@@ -33,12 +35,20 @@ function App() {
         setFilter(value)
     }
 
+    const addTask = (title: string) => {
+        setTask([{id: v1(), title: title, isDone: false}, ...tasks])
+    }
+
     return (
         <div className="App">
-            <Todolist title={'What to learn'}
-                      tasks={taskForTodolist}
-                      removeTask={removeTask}
-                      changeButton={changeButton}
+            <Todolist
+                title={'What to learn'}
+                tasks={taskForTodolist}
+                removeTask={removeTask}
+                changeButton={changeButton}
+                addTask={addTask}
+                changeTaskStatus={changeTaskStatus}
+                filter={filter}
             />
         </div>
     );
