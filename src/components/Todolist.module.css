@@ -1,0 +1,7 @@
+.wrap {
+    display: flex;
+    flex-direction: row;
+    font-weight: bolder;
+    margin-bottom: 10px;
+    gap: 5px
+}
