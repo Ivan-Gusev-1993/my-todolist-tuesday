@@ -7,7 +7,7 @@ type EditableSpanPropsType = {
 
 export const EditableSpan = (props: EditableSpanPropsType) => {
     let [edit, setEdit] = useState(false)
-    let [title, setTitle] = useState('')
+    let [title, setTitle] = useState(props.title)
 
     const changeTitleValue = (event: ChangeEvent<HTMLInputElement>)=> {
         setTitle(event.currentTarget.value)

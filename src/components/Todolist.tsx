@@ -22,6 +22,7 @@ type TodolistPropsType = {
     id: string
     removeTodolist: (todolistId: string) => void
     changeTodoTitle: (todolistId: string, title: string) => void
+    changeTaskTitle: (todolistId: string, taskId:string, title: string)=>void
 }
 
 export const Todolist = (props: TodolistPropsType) => {
@@ -42,12 +43,15 @@ export const Todolist = (props: TodolistPropsType) => {
     const callBackAddTask = (title: string) => {
         props.addTask(props.id, title)
     }
+    const callBackChangeTitle = (title: string) => {
+        props.changeTodoTitle(props.id, title)
+    }
 
     return (
         <div>
             <div>
                 <div className={s.wrap}>
-                    <EditableSpan title={props.title} callBack={() => {}}/>
+                    <EditableSpan title={props.title} callBack={callBackChangeTitle}/>
                     <button onClick={deleteToDo}>x</button>
                 </div>
                 <AddNewItem callBack={callBackAddTask}/>
@@ -61,15 +65,21 @@ export const Todolist = (props: TodolistPropsType) => {
                             props.changeTaskStatus(props.id, el.id, e.currentTarget.checked)
                         }
 
+                        const callbackChangeTaskTitle = (title: string) => {
+                            props.changeTaskTitle(props.id, el.id, title)
+                        }
+
                         return (
                             <li key={el.id} className={el.isDone ? 'is-done' : ''}>
-                                <input
+                                <div className={s.wrapTask}>
+                                    <input
                                     onChange={onChangeHandler}
                                     type="checkbox"
                                     checked={el.isDone}
                                 />
-                                <span>{el.title}</span>
-                                <button onClick={onClickButtonHandler}>x</button>
+                                    <EditableSpan callBack={callbackChangeTaskTitle} title={el.title}/>
+                                    <button onClick={onClickButtonHandler}>x</button>
+                                </div>
                             </li>
                         )
                     })}

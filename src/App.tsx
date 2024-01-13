@@ -70,6 +70,10 @@ function App() {
         setTodolists(todolists.map(t => t.id === todolistId ? {...t, title: title} : t))
     }
 
+    const changeTaskTitle = (todolistId: string, taskId:string, title: string) => {
+        setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, title: title} : t)})
+    }
+
     return (
         <div className="App">
             <AddNewItem  callBack={addTodolist}/>
@@ -97,6 +101,7 @@ function App() {
                         filter={todolist.filter}
                         removeTodolist={removeTodolist}
                         changeTodoTitle={changeTodoTitle}
+                        changeTaskTitle={changeTaskTitle}
                     />
                 })
             }
